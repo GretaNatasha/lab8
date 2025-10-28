@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 3: Promedio de calificaciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <!-- El CSS está incluido aquí para hacer el archivo autocontenido -->
+    <style>
+/* Configuración general y de la fuente */
+:root {
+    /* Nueva Paleta de colores */
+    --color-naranja-coral: #F78C6B;
+    --color-blanco-roto: #FEFAE6;
+    --color-amarillo-mostaza: #FDD678; 
+    --color-azul-verdoso-oscuro: #084C61;
+    --color-azul-marino: #203351;
+    --color-azul-cielo-brillante: #2AB7CA; /* Acento para Problema 3 */
+    --color-beige-claro: #EBEBD3;
+    --color-rosa-pastel: #F8B6CE;
+
+    /* Asignación de Roles */
+    --fondo-principal: #FFFFFF; /* Fondo blanco puro */
+    --fondo-header: var(--color-azul-cielo-brillante); /* Fondo Azul Cielo */
+    --texto-principal: var(--color-azul-marino);
+    --texto-header: var(--color-azul-marino); /* Texto oscuro para contraste */
+    --sombra-suave: rgba(0, 0, 0, 0.1);
+    --sombra-profunda: rgba(0, 0, 0, 0.25);
+
+    /* Colores de Acento General */
+    --tarjeta-acento-1: var(--color-naranja-coral);
+    --tarjeta-acento-2: var(--color-amarillo-mostaza); 
+    --tarjeta-acento-3: var(--color-azul-cielo-brillante); /* Usado como acento principal aquí */
+    --tarjeta-acento-4: var(--color-rosa-pastel);
+    --tarjeta-acento-5: var(--color-azul-marino); 
+
+    /* Colores Específicos para Problema 3 */
+    --p3-acento: var(--tarjeta-acento-3); /* Azul Cielo Brillante */
+    --p3-acento-hover: #1f94a5; /* Tono de azul más oscuro para hover */
+    --p3-acento-focus-shadow: rgba(42, 183, 202, 0.5); /* Sombra para focus */
+    --p3-resultado-borde: var(--color-azul-marino); /* Usamos el azul marino para el borde del resultado */
+    --p3-resultado-sombra: rgba(32, 51, 81, 0.2); 
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--fondo-principal); 
+    color: var(--texto-principal);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex; /* Añadido para layout de footer */
+    flex-direction: column; /* Añadido para layout de footer */
+}
+
+/* Estilos de Botón y Formulario Específicos para este Problema */
+.contenedor-formulario {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--sombra-suave);
+    /* Acento en el borde superior */
+    border-top: 5px solid var(--p3-acento); 
+}
+
+.input-grupo {
+    margin-bottom: 20px;
+}
+
+.input-grupo label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--texto-principal);
+}
+
+.input-grupo input[type="text"],
+.input-grupo input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--color-beige-claro);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: border-color 0.3s;
+}
+
+/* Ocultar flechas del input type="number" */
+.input-grupo input[type="number"]::-webkit-inner-spin-button,
+.input-grupo input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-grupo input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input-grupo input:focus {
+    outline: none;
+    /* Acento en el focus */
+    border-color: var(--p3-acento);
+    box-shadow: 0 0 0 3px var(--p3-acento-focus-shadow);
+}
+
+.boton-calcular {
+    width: 100%;
+    padding: 15px;
+    /* Acento en el botón */
+    background-color: var(--p3-acento);
+    color: var(--texto-header); 
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.boton-calcular:hover {
+    background-color: var(--p3-acento-hover); 
+    transform: translateY(-2px);
+}
+
+.boton-calcular:active {
+    transform: translateY(0);
+}
+
+/* Estilos mejorados para el resultado */
+.resultado {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #FFFFFF; 
+    border: 2px solid var(--p3-resultado-borde); 
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 500; 
+    color: var(--texto-principal);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px var(--p3-resultado-sombra); 
+}
+
+.resultado b {
+    font-weight: 700;
+    /* Acento para el texto destacado */
+    color: var(--p3-acento);
+}
+
+/* Estilo del icono/emoji de resultado */
+.result-icon {
+    font-size: 1.8rem; 
+    flex-shrink: 0;
+    line-height: 1; 
+}
+
+
+/* Estilos de encabezado */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px; 
+    background-color: var(--fondo-header); /* Fondo Azul Cielo */
+    color: var(--texto-header); 
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--sombra-profunda);
+    position: relative; /* Mantenemos relative, aunque no habrá enlace posicionado */
+}
+
+header h1 {
+    font-size: 3rem;
+    color: var(--texto-header); /* Azul Marino para contraste */
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: none; 
+}
+
+/* Estilos del Footer y Enlace de Volver */
+footer {
+    margin-top: auto; /* Empuja el footer hacia abajo */
+    padding-top: 20px;
+    text-align: center;
+}
+
+.enlace-volver {
+    /* Estilos visuales (Color Naranja Coral) */
+    display: inline-block;
+    padding: 10px 20px; 
+    background-color: var(--tarjeta-acento-1); 
+    color: #FFFFFF; 
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem; 
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.enlace-volver:hover {
+    background-color: var(--p3-acento); /* Usa el acento del problema 3 para hover */
+    transform: translateY(-2px);
+}
+
+
+/* Media Query para móviles */
+@media (max-width: 600px) {
+    body { padding: 15px; }
+    header { margin-bottom: 30px; padding: 20px 10px; }
+    header h1 { font-size: 2.2rem; }
+    .contenedor-formulario { margin: 30px auto; padding: 30px; }
+    .boton-calcular { font-size: 1.1rem; }
+    .resultado { font-size: 1rem; padding: 15px; }
+    
+    .enlace-volver {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <!-- El enlace de volver se ha quitado del header -->
+        <h1>Problema 3: Promedio de calificaciones</h1>
+        <p>Ingresa el nombre del estudiante y sus tres calificaciones.</p>
+    </header>
+
+    <main style="flex-grow: 1;">
+        <div class="contenedor-formulario">
+            <!-- Formulario de entrada de datos (Nombre y 3 calificaciones) -->
+            <div class="input-grupo">
+                <label for="nombre">Nombre del Estudiante:</label>
+                <input type="text" id="nombre" placeholder="Ej: Juan Pérez">
+            </div>
+
+            <div class="input-grupo">
+                <label for="calificacion1">Calificación 1 (0-100):</label>
+                <input type="number" id="calificacion1" min="0" max="100" value="0">
+            </div>
+
+            <div class="input-grupo">
+                <label for="calificacion2">Calificación 2 (0-100):</label>
+                <input type="number" id="calificacion2" min="0" max="100" value="0">
+            </div>
+
+            <div class="input-grupo">
+                <label for="calificacion3">Calificación 3 (0-100):</label>
+                <input type="number" id="calificacion3" min="0" max="100" value="0">
+            </div>
+            
+            <button class="boton-calcular" onclick="calcularPromedio()">Calcular Promedio</button>
+            
+            <!-- Área para mostrar el resultado -->
+            <div class="resultado" id="resultado-promedio">
+                El resultado aparecerá aquí.
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <!-- Enlace "Volver al inicio" movido al footer -->
+        <a href="index.html" class="enlace-volver">← Volver al inicio</a>
+    </footer>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        /**
+         * Icono o emoji para el resultado final.
+         * Usamos el emoji de birrete de graduación (🎓) para indicar un promedio.
+         */
+        const resultIcon = '🎓'; 
+
+        /**
+         * Función principal para calcular el promedio de tres calificaciones.
+         * Esta función se ejecuta al hacer clic en el botón "Calcular Promedio".
+         */
+        function calcularPromedio() {
+            // 1. Obtener el nombre del estudiante
+            const nombre = document.getElementById('nombre').value.trim() || 'Estudiante';
+
+            // 2. Obtener y sanitizar las calificaciones
+            const c1 = parseFloat(document.getElementById('calificacion1').value) || 0;
+            const c2 = parseFloat(document.getElementById('calificacion2').value) || 0;
+            const c3 = parseFloat(document.getElementById('calificacion3').value) || 0;
+
+            // Validar que las calificaciones estén en el rango 0-100
+            const calificacionesValidas = [c1, c2, c3].map(c => {
+                if (c < 0) return 0;
+                if (c > 100) return 100;
+                return c;
+            });
+
+            const [valida1, valida2, valida3] = calificacionesValidas;
+
+            // 3. Calcular el promedio
+            const suma = valida1 + valida2 + valida3;
+            const promedio = suma / 3;
+
+            // Redondear el promedio a 2 decimales para una mejor presentación
+            const promedioRedondeado = promedio.toFixed(2);
+
+            // 4. Mostrar el resultado con el formato solicitado: 'El promedio de [Nombre] es: [Promedio] puntos'
+            const resultadoElemento = document.getElementById('resultado-promedio');
+            
+            const mensaje = `
+                <span class="result-icon">${resultIcon}</span>
+                <span>
+                    El promedio de <b>${nombre}</b> es: <b>${promedioRedondeado}</b> puntos.
+                </span>
+            `;
+
+            resultadoElemento.innerHTML = mensaje;
+        }
+    </script>
+</body>
+</html>

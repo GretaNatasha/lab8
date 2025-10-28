@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 4: Conversión de unidades</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <!-- El CSS está incluido aquí para hacer el archivo autocontenido -->
+    <style>
+/* Configuración general y de la fuente */
+:root {
+    /* Paleta de colores base */
+    --color-naranja-coral: #F78C6B;
+    --color-blanco-roto: #FEFAE6;
+    --color-amarillo-mostaza: #FDD678; 
+    --color-azul-verdoso-oscuro: #084C61;
+    --color-azul-marino: #203351;
+    --color-azul-cielo-brillante: #2AB7CA;
+    --color-beige-claro: #EBEBD3;
+    --color-rosa-pastel: #F8B6CE; /* Color de acento para Problema 4 */
+
+    /* Asignación de Roles */
+    --fondo-principal: #FFFFFF;
+    --fondo-header: var(--color-rosa-pastel); /* Fondo Rosa Pastel */
+    --texto-principal: var(--color-azul-marino);
+    --texto-header: var(--color-azul-marino); /* Texto oscuro para contraste */
+    --sombra-suave: rgba(0, 0, 0, 0.1);
+    --sombra-profunda: rgba(0, 0, 0, 0.25);
+
+    /* Colores de Acento General */
+    --tarjeta-acento-1: var(--color-naranja-coral);
+    --tarjeta-acento-2: var(--color-amarillo-mostaza); 
+    --tarjeta-acento-3: var(--color-azul-cielo-brillante);
+    --tarjeta-acento-4: var(--color-rosa-pastel); /* Usado como acento principal aquí */
+    --tarjeta-acento-5: var(--color-azul-marino); 
+
+    /* Colores Específicos para Problema 4 (Rosa Pastel) */
+    --p4-acento: var(--tarjeta-acento-4); 
+    --p4-acento-hover: #e098b8; /* Tono de rosa más oscuro para hover */
+    --p4-acento-focus-shadow: rgba(248, 182, 206, 0.5); 
+    --p4-resultado-borde: var(--color-azul-marino); 
+    --p4-resultado-sombra: rgba(32, 51, 81, 0.2); 
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--fondo-principal); 
+    color: var(--texto-principal);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos de Botón y Formulario Específicos */
+.contenedor-formulario {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--sombra-suave);
+    /* Acento en el borde superior */
+    border-top: 5px solid var(--p4-acento); 
+}
+
+.input-grupo {
+    margin-bottom: 20px;
+}
+
+.input-grupo label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--texto-principal);
+}
+
+.input-grupo input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--color-beige-claro);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: border-color 0.3s;
+}
+
+/* Ocultar flechas del input type="number" */
+.input-grupo input[type="number"]::-webkit-inner-spin-button,
+.input-grupo input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-grupo input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input-grupo input:focus {
+    outline: none;
+    /* Acento en el focus */
+    border-color: var(--p4-acento);
+    box-shadow: 0 0 0 3px var(--p4-acento-focus-shadow);
+}
+
+.boton-calcular {
+    width: 100%;
+    padding: 15px;
+    /* Acento en el botón */
+    background-color: var(--p4-acento);
+    color: var(--texto-header); 
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.boton-calcular:hover {
+    background-color: var(--p4-acento-hover); 
+    transform: translateY(-2px);
+}
+
+.boton-calcular:active {
+    transform: translateY(0);
+}
+
+/* Estilos mejorados para el resultado */
+.resultado {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #FFFFFF; 
+    border: 2px solid var(--p4-resultado-borde); 
+    border-radius: 10px;
+    font-size: 1.2rem; /* Aumentado para la frase unificada */
+    font-weight: 500; 
+    color: var(--texto-principal);
+    min-height: 80px; 
+    display: flex;
+    align-items: center; /* Alineación vertical */
+    gap: 10px;
+    box-shadow: 0 4px 15px var(--p4-resultado-sombra); 
+}
+
+.resultado b {
+    font-weight: 700;
+    /* Acento para el texto destacado */
+    color: var(--p4-acento);
+}
+
+/* Estilo del icono/emoji de resultado */
+.result-icon {
+    font-size: 1.8rem; 
+    flex-shrink: 0;
+    line-height: 1; 
+    color: var(--p4-acento);
+    margin-right: 5px;
+}
+
+/* Quitamos estilos innecesarios para la salida unificada */
+.resultado-linea {
+    display: contents;
+}
+
+
+/* Estilos de encabezado */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px; 
+    background-color: var(--fondo-header); /* Fondo Rosa Pastel */
+    color: var(--texto-header); 
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--sombra-profunda);
+    position: relative; 
+}
+
+header h1 {
+    font-size: 3rem;
+    color: var(--texto-header); 
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: none; 
+}
+
+/* Estilos del Footer y Enlace de Volver (igual que el problema 3) */
+footer {
+    margin-top: auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.enlace-volver {
+    /* Estilos visuales (Color Naranja Coral) */
+    display: inline-block;
+    padding: 10px 20px; 
+    background-color: var(--tarjeta-acento-1); 
+    color: #FFFFFF; 
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem; 
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.enlace-volver:hover {
+    background-color: var(--p4-acento); /* Usa el acento del problema 4 para hover */
+    transform: translateY(-2px);
+}
+
+
+/* Media Query para móviles */
+@media (max-width: 600px) {
+    body { padding: 15px; }
+    header { margin-bottom: 30px; padding: 20px 10px; }
+    header h1 { font-size: 2.2rem; }
+    .contenedor-formulario { margin: 30px auto; padding: 30px; }
+    .boton-calcular { font-size: 1.1rem; }
+    .resultado { font-size: 1rem; padding: 15px; }
+    
+    .enlace-volver {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Problema 4: Conversión de unidades</h1>
+        <p>Ingresa un valor en metros para convertirlo a centímetros y kilómetros.</p>
+    </header>
+
+    <main style="flex-grow: 1;">
+        <div class="contenedor-formulario">
+            <!-- Formulario de entrada de datos (solo la cantidad en metros) -->
+            <div class="input-grupo">
+                <label for="metros">Valor en Metros (m):</label>
+                <input type="number" id="metros" min="0" value="1">
+            </div>
+
+            <button class="boton-calcular" onclick="convertirUnidades()">Convertir Unidades</button>
+            
+            <!-- Área para mostrar el resultado -->
+            <div class="resultado" id="resultado-conversion">
+                Los resultados de la conversión aparecerán aquí.
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <!-- Enlace "Volver al inicio" -->
+        <a href="index.html" class="enlace-volver">← Volver al inicio</a>
+    </footer>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        /**
+         * Icono o emoji para el resultado final (regla).
+         */
+        const resultIcon = '📏'; 
+
+        /**
+         * Función principal para convertir metros a centímetros y kilómetros.
+         * Esta función se ejecuta al hacer clic en el botón "Convertir Unidades".
+         */
+        function convertirUnidades() {
+            // 1. Obtener y sanitizar el valor de entrada en metros
+            const metrosInput = document.getElementById('metros').value;
+            let metros = parseFloat(metrosInput);
+            
+            // Validar si el valor es un número válido y no negativo
+            if (isNaN(metros) || metros < 0) {
+                metros = 0;
+                document.getElementById('metros').value = 0; 
+            }
+
+            // 2. Realizar las conversiones
+            // 1 metro = 100 centímetros
+            // Usamos toFixed(2) en metros para asegurar una presentación consistente en el mensaje.
+            const metrosDisplay = metros.toFixed(2);
+            
+            // Calculamos centímetros y eliminamos decimales si son .00
+            const centimetrosRaw = metros * 100;
+            let centimetros = centimetrosRaw.toFixed(2);
+            if (centimetros.endsWith('.00')) {
+                centimetros = parseInt(centimetros, 10).toLocaleString('es-ES'); // Formato de miles en español
+            } else {
+                centimetros = parseFloat(centimetros).toLocaleString('es-ES'); // Formato de miles y decimales en español
+            }
+
+            // Calculamos kilómetros. toFixed(6) asegura el formato de 6 decimales.
+            const kilometros = (metros / 1000).toFixed(6).replace('.', ','); // Reemplazar punto por coma para formato español
+
+            // 3. Crear el mensaje unificado: '500 metros equivalen a 50,000 centímetros y 0.5 kilómetros.'
+            const mensaje = `
+                <span class="result-icon">${resultIcon}</span>
+                <span>
+                    <b>${metrosDisplay}</b> metros equivalen a 
+                    <b>${centimetros}</b> centímetros y 
+                    <b>${kilometros}</b> kilómetros.
+                </span>
+            `;
+
+            document.getElementById('resultado-conversion').innerHTML = mensaje;
+        }
+    </script>
+</body>
+</html>

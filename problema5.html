@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 5: Comparación de dos valores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <!-- El CSS está incluido aquí para hacer el archivo autocontenido -->
+    <style>
+/* Configuración general y de la fuente */
+:root {
+    /* Paleta de colores base */
+    --color-naranja-coral: #F78C6B;
+    --color-blanco-roto: #FEFAE6;
+    --color-amarillo-mostaza: #FDD678; 
+    --color-azul-verdoso-oscuro: #084C61;
+    --color-azul-marino: #203351; /* Color de acento para Problema 5 */
+    --color-azul-cielo-brillante: #2AB7CA;
+    --color-beige-claro: #EBEBD3;
+    --color-rosa-pastel: #F8B6CE; 
+
+    /* Asignación de Roles */
+    --fondo-principal: #FFFFFF;
+    --fondo-header: var(--color-azul-marino); /* Fondo Azul Marino */
+    --texto-principal: var(--color-azul-marino);
+    --texto-header: #FFFFFF; /* Texto blanco para contraste */
+    --sombra-suave: rgba(0, 0, 0, 0.1);
+    --sombra-profunda: rgba(0, 0, 0, 0.25);
+
+    /* Colores de Acento General */
+    --tarjeta-acento-1: var(--color-naranja-coral);
+    --tarjeta-acento-2: var(--color-amarillo-mostaza); 
+    --tarjeta-acento-3: var(--color-azul-cielo-brillante);
+    --tarjeta-acento-4: var(--color-rosa-pastel); 
+    --tarjeta-acento-5: var(--color-azul-marino); /* Usado como acento principal aquí */
+
+    /* Colores Específicos para Problema 5 (Azul Marino) */
+    --p5-acento: var(--tarjeta-acento-5); 
+    --p5-acento-hover: #15263d; /* Tono de azul más oscuro para hover */
+    --p5-acento-focus-shadow: rgba(32, 51, 81, 0.5); 
+    --p5-resultado-borde: var(--color-naranja-coral); 
+    --p5-resultado-sombra: rgba(247, 140, 107, 0.2); 
+    --p5-borde-input: var(--color-azul-verdoso-oscuro);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--fondo-principal); 
+    color: var(--texto-principal);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos de Botón y Formulario Específicos */
+.contenedor-formulario {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--sombra-suave);
+    /* Acento en el borde superior */
+    border-top: 5px solid var(--p5-acento); 
+}
+
+.input-grupo {
+    margin-bottom: 20px;
+}
+
+.input-grupo label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--texto-principal);
+}
+
+.input-grupo input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--color-beige-claro);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: border-color 0.3s;
+}
+
+/* Ocultar flechas del input type="number" */
+.input-grupo input[type="number"]::-webkit-inner-spin-button,
+.input-grupo input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-grupo input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input-grupo input:focus {
+    outline: none;
+    /* Acento en el focus */
+    border-color: var(--p5-acento);
+    box-shadow: 0 0 0 3px var(--p5-acento-focus-shadow);
+}
+
+.boton-calcular {
+    width: 100%;
+    padding: 15px;
+    /* Acento en el botón */
+    background-color: var(--p5-acento);
+    color: var(--texto-header); 
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.boton-calcular:hover {
+    background-color: var(--p5-acento-hover); 
+    transform: translateY(-2px);
+}
+
+.boton-calcular:active {
+    transform: translateY(0);
+}
+
+/* Estilos mejorados para el resultado */
+.resultado {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #FFFFFF; 
+    border: 2px solid var(--p5-resultado-borde); 
+    border-radius: 10px;
+    font-size: 1.2rem; 
+    font-weight: 500; 
+    color: var(--texto-principal);
+    min-height: 80px; 
+    display: flex;
+    align-items: center; /* Alineación vertical */
+    gap: 10px;
+    box-shadow: 0 4px 15px var(--p5-resultado-sombra); 
+}
+
+.resultado b {
+    font-weight: 700;
+    /* Acento para el texto destacado */
+    color: var(--p5-acento);
+}
+
+/* Estilo del icono/emoji de resultado */
+.result-icon {
+    font-size: 1.8rem; 
+    flex-shrink: 0;
+    line-height: 1; 
+    color: var(--p5-acento);
+    margin-right: 5px;
+}
+
+/* Estilos de encabezado */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px; 
+    background-color: var(--fondo-header); /* Fondo Azul Marino */
+    color: var(--texto-header); 
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--sombra-profunda);
+    position: relative; 
+}
+
+header h1 {
+    font-size: 3rem;
+    color: var(--texto-header); 
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: none; 
+}
+
+/* Estilos de error/alerta */
+.alerta-error {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #ffe5e5; /* Fondo rojo claro */
+    color: #cc0000; /* Texto rojo oscuro */
+    border: 1px solid #cc0000;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Estilos del Footer y Enlace de Volver */
+footer {
+    margin-top: auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.enlace-volver {
+    /* Estilos visuales (Color Naranja Coral) */
+    display: inline-block;
+    padding: 10px 20px; 
+    background-color: var(--p5-resultado-borde); /* Naranja Coral */
+    color: #FFFFFF; 
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem; 
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.enlace-volver:hover {
+    background-color: #e07050; /* Tono de naranja más oscuro para hover */
+    transform: translateY(-2px);
+}
+
+
+/* Media Query para móviles */
+@media (max-width: 600px) {
+    body { padding: 15px; }
+    header { margin-bottom: 30px; padding: 20px 10px; }
+    header h1 { font-size: 2.2rem; }
+    .contenedor-formulario { margin: 30px auto; padding: 30px; }
+    .boton-calcular { font-size: 1.1rem; }
+    .resultado { font-size: 1rem; padding: 15px; }
+    
+    .enlace-volver {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Problema 5: Comparación de dos valores</h1>
+        <p>Ingresa dos números diferentes para saber cuál es mayor, cuál es menor y su diferencia.</p>
+    </header>
+
+    <main style="flex-grow: 1;">
+        <div class="contenedor-formulario">
+            <!-- Formulario de entrada de datos -->
+            <div class="input-grupo">
+                <label for="numero1">Primer Número:</label>
+                <input type="number" id="numero1" value="15">
+            </div>
+
+            <div class="input-grupo">
+                <label for="numero2">Segundo Número:</label>
+                <input type="number" id="numero2" value="8">
+            </div>
+
+            <button class="boton-calcular" onclick="compararValores()">Comparar</button>
+            
+            <!-- Área para mostrar el resultado o el error -->
+            <div class="resultado" id="resultado-comparacion">
+                El resultado de la comparación aparecerá aquí.
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <!-- Enlace "Volver al inicio" -->
+        <a href="index.html" class="enlace-volver">← Volver al inicio</a>
+    </footer>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        /**
+         * Icono o emoji para el resultado final (comparación).
+         */
+        const resultIcon = '⚖️'; 
+
+        /**
+         * Función principal para comparar dos números.
+         * Esta función se ejecuta al hacer clic en el botón "Comparar".
+         */
+        function compararValores() {
+            // 1. Obtener y sanitizar los valores de entrada
+            const num1Input = document.getElementById('numero1').value;
+            const num2Input = document.getElementById('numero2').value;
+            
+            // Convertir a número flotante
+            let num1 = parseFloat(num1Input);
+            let num2 = parseFloat(num2Input);
+            
+            const resultadoElemento = document.getElementById('resultado-comparacion');
+            
+            // 2. Validación de entrada: Asegurar que sean números y no estén vacíos
+            if (isNaN(num1) || isNaN(num2) || num1Input.trim() === '' || num2Input.trim() === '') {
+                resultadoElemento.innerHTML = `<div class="alerta-error">Por favor, ingresa dos valores numéricos válidos.</div>`;
+                return;
+            }
+
+            // 3. Validación de números iguales
+            if (num1 === num2) {
+                resultadoElemento.innerHTML = `<div class="alerta-error">⚠️ Los números deben ser diferentes para realizar la comparación.</div>`;
+                return;
+            }
+
+            // 4. Determinar Mayor, Menor y Diferencia
+            let mayor;
+            let menor;
+            
+            if (num1 > num2) {
+                mayor = num1;
+                menor = num2;
+            } else { // num2 > num1 (ya validamos que no son iguales)
+                mayor = num2;
+                menor = num1;
+            }
+            
+            // La diferencia se calcula y se redondea para evitar decimales innecesarios,
+            // especialmente si los números de entrada eran enteros.
+            // Usamos Math.round para evitar problemas de coma flotante si se ingresan decimales.
+            const diferenciaRaw = mayor - menor;
+            const diferencia = Math.round(diferenciaRaw);
+            
+            // Formatear los números para la salida (usando formato español)
+            const formatoOpciones = { minimumFractionDigits: 0, maximumFractionDigits: 2 };
+
+            // El número mayor y menor mantienen hasta dos decimales si los tienen
+            const mayorDisplay = mayor.toLocaleString('es-ES', formatoOpciones);
+            const menorDisplay = menor.toLocaleString('es-ES', formatoOpciones);
+            
+            // La diferencia se muestra como entero sin forzar decimales (usamos toLocaleString para formatear miles)
+            const diferenciaDisplay = diferencia.toLocaleString('es-ES', { maximumFractionDigits: 0 });
+
+            // 5. Crear el mensaje unificado: 'El número mayor es 15, el menor es 8, y su diferencia es 7.'
+            const mensaje = `
+                <span class="result-icon">${resultIcon}</span>
+                <span>
+                    El número mayor es <b>${mayorDisplay}</b>, el menor es <b>${menorDisplay}</b>, y su diferencia es <b>${diferenciaDisplay}</b>.
+                </span>
+            `;
+
+            resultadoElemento.innerHTML = mensaje;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+/* Configuración general y de la fuente */
+:root {
+    /* Nueva Paleta de colores */
+    --color-naranja-coral: #F78C6B;
+    --color-negra:#F78C6B;
+    --color-blanco-roto: #FEFAE6;
+    --color-amarillo-mostaza: #FDD678;
+    --color-azul-verdoso-oscuro: #f4ddbc;
+    --color-azul-marino: #203351;
+    --color-azul-cielo-brillante: #2AB7CA;
+    --color-beige-claro: #EBEBD3;
+    --color-rosa-pastel: #F8B6CE;
+
+    /* Asignación de Roles */
+    --fondo-principal: var(--color-blanco-roto);
+    --fondo-header: var(--color-azul-verdoso-oscuro);
+    --texto-principal: var(--color-azul-marino);
+    --texto-header: var(--color-blanco-roto); /* Color del texto dentro del header */
+    --sombra-suave: rgba(0, 0, 0, 0.1);
+    --sombra-profunda: rgba(0, 0, 0, 0.25);
+
+    /* Colores para bordes y hover de tarjetas (más vibrantes) */
+    --tarjeta-acento-1: var(--color-naranja-coral);
+    --tarjeta-acento-2: var(--color-amarillo-mostaza);
+    --tarjeta-acento-3: var(--color-azul-cielo-brillante);
+    --tarjeta-acento-4: var(--color-rosa-pastel);
+    --tarjeta-acento-5: var(--color-azul-marino); /* Reutilizamos uno fuerte */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--fondo-principal); 
+    color: var(--texto-principal);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Encabezado */
+header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 30px 20px;
+    background-color: var(--fondo-header); 
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--sombra-profunda);
+}
+
+header h1 {
+    font-size: 3rem;
+    color: var(--co); /* Un color de la paleta para el título */
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+header p { 
+    color: var(--texto-header);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Contenedor de las Tarjetas */
+.contenedor-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 10px;
+}
+
+/* Estilo Base de la Tarjeta */
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+    background-color: #FFFFFF; /* Blanco puro para el fondo de tarjeta */
+    padding: 30px;
+    border-radius: 15px;
+    
+    /* Borde inferior grueso, color base (cambiará por tarjeta) */
+    border-bottom: 8px solid var(--texto-principal); /* Base oscura */
+    border-left: 1px solid rgba(0,0,0,0.08); 
+    border-right: 1px solid rgba(0,0,0,0.08);
+    border-top: 1px solid rgba(0,0,0,0.08);
+
+    box-shadow: 0 10px 25px var(--sombra-suave);
+    
+    transition: all 0.4s cubic-bezier(.25,.8,.25,1);
+    color: var(--texto-principal);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto al pasar el ratón por encima de la tarjeta */
+.tarjeta:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 20px 40px var(--sombra-profunda); /* Sombra más pronunciada */
+}
+
+/* Título de la tarjeta */
+.tarjeta h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--texto-principal);
+    transition: color 0.3s ease;
+}
+
+/* Descripción de la tarjeta */
+.tarjeta p {
+    font-size: 1.05rem;
+    color: var(--texto-principal); 
+    line-height: 1.7;
+}
+
+/* 🟢 Colores distintos para cada tarjeta y hover 🟢 */
+
+/* Tarjeta 1 */
+.tarjeta:nth-child(1) { border-bottom-color: var(--tarjeta-acento-1); }
+.tarjeta:nth-child(1):hover { border-bottom-color: var(--tarjeta-acento-1); }
+.tarjeta:nth-child(1):hover h2 { color: var(--tarjeta-acento-1); }
+
+/* Tarjeta 2 */
+.tarjeta:nth-child(2) { border-bottom-color: var(--tarjeta-acento-2); }
+.tarjeta:nth-child(2):hover { border-bottom-color: var(--tarjeta-acento-2); }
+.tarjeta:nth-child(2):hover h2 { color: var(--tarjeta-acento-2); }
+
+/* Tarjeta 3 */
+.tarjeta:nth-child(3) { border-bottom-color: var(--tarjeta-acento-3); }
+.tarjeta:nth-child(3):hover { border-bottom-color: var(--tarjeta-acento-3); }
+.tarjeta:nth-child(3):hover h2 { color: var(--tarjeta-acento-3); }
+
+/* Tarjeta 4 */
+.tarjeta:nth-child(4) { border-bottom-color: var(--tarjeta-acento-4); }
+.tarjeta:nth-child(4):hover { border-bottom-color: var(--tarjeta-acento-4); }
+.tarjeta:nth-child(4):hover h2 { color: var(--tarjeta-acento-4); }
+
+/* Tarjeta 5 */
+.tarjeta:nth-child(5) { border-bottom-color: var(--tarjeta-acento-5); }
+.tarjeta:nth-child(5):hover { border-bottom-color: var(--tarjeta-acento-5); }
+.tarjeta:nth-child(5):hover h2 { color: var(--tarjeta-acento-5); }
+
+
+/* Media Query para móviles */
+@media (max-width: 600px) {
+    body { padding: 15px; }
+    header { margin-bottom: 30px; padding: 20px 10px; }
+    header h1 { font-size: 2.2rem; }
+    header p { font-size: 0.9rem; }
+    .contenedor-tarjetas { grid-template-columns: 1fr; gap: 20px; }
+    .tarjeta { padding: 25px; }
+    .tarjeta h2 { font-size: 1.5rem; }
+}

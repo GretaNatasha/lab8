@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 1: Suma de tres valores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <!-- El CSS está incluido aquí para hacer el archivo autocontenido --><style>
+/* Configuración general y de la fuente */
+:root {
+    /* Paleta de colores base */
+    --color-naranja-coral: #F78C6B;
+    --color-blanco-roto: #FEFAE6;
+    --color-amarillo-mostaza: #FDD678; 
+    --color-azul-verdoso-oscuro: #084C61;
+    --color-azul-marino: #203351;
+    --color-azul-cielo-brillante: #2AB7CA;
+    --color-beige-claro: #EBEBD3;
+    --color-rosa-pastel: #F8B6CE; 
+
+    /* Asignación de Roles */
+    --fondo-principal: #FFFFFF;
+    /* Los colores del header ahora se gestionan con variables específicas de p1 */
+    --texto-principal: var(--color-azul-marino);
+    --texto-header: #FFFFFF; /* Texto blanco para contraste */
+    --sombra-suave: rgba(0, 0, 0, 0.1);
+    --sombra-profunda: rgba(0, 0, 0, 0.25);
+
+    /* Colores de Acento General */
+    --tarjeta-acento-1: var(--color-naranja-coral); /* Naranja Coral: Acento para Problema 1 */
+    --tarjeta-acento-2: var(--color-amarillo-mostaza); 
+    --tarjeta-acento-3: var(--color-azul-cielo-brillante);
+    --tarjeta-acento-4: var(--color-rosa-pastel); 
+    --tarjeta-acento-5: var(--color-azul-marino);
+
+    /* Colores Específicos para Problema 1 (Naranja Coral) */
+    --p1-acento: var(--tarjeta-acento-1); 
+    --p1-acento-hover: #e57c5a; /* Tono de naranja más oscuro para hover */
+    --p1-acento-focus-shadow: rgba(247, 140, 107, 0.3); 
+    --p1-resultado-borde: var(--color-azul-cielo-brillante); /* Borde diferente para contraste */
+    --p1-resultado-sombra: rgba(42, 183, 202, 0.2); 
+    --p1-header-bg: var(--color-naranja-coral); /* Fondo del header: Naranja Coral */
+    --p1-header-text: #FFFFFF; /* Texto del header: Blanco */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--fondo-principal); 
+    color: var(--texto-principal);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Habilitar sticky footer */
+}
+
+/* Estilos de Botón y Formulario Específicos */
+.contenedor-formulario {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--sombra-suave);
+    /* Acento en el borde superior: Naranja Coral */
+    border-top: 5px solid var(--p1-acento); 
+}
+
+.input-grupo {
+    margin-bottom: 20px;
+}
+
+.input-grupo label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--texto-principal);
+}
+
+.input-grupo input[type="text"],
+.input-grupo input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--color-beige-claro);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: border-color 0.3s;
+}
+
+/* Ocultar flechas del input type="number" */
+.input-grupo input[type="number"]::-webkit-inner-spin-button,
+.input-grupo input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-grupo input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input-grupo input:focus {
+    outline: none;
+    /* Acento en el focus: Naranja Coral */
+    border-color: var(--p1-acento);
+    box-shadow: 0 0 0 3px var(--p1-acento-focus-shadow);
+}
+
+.boton-calcular {
+    width: 100%;
+    padding: 15px;
+    /* Acento en el botón: Naranja Coral */
+    background-color: var(--p1-acento);
+    color: var(--texto-header); 
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.boton-calcular:hover {
+    background-color: var(--p1-acento-hover); /* Tono de naranja más oscuro */
+    transform: translateY(-2px);
+}
+
+.boton-calcular:active {
+    transform: translateY(0);
+}
+
+/* Estilos mejorados para el resultado */
+.resultado {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #FFFFFF; 
+    border: 2px solid var(--p1-resultado-borde); /* Borde Azul Claro */
+    border-radius: 10px;
+    font-size: 1.2rem; 
+    font-weight: 500; 
+    color: var(--texto-principal);
+    min-height: 80px; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px var(--p1-resultado-sombra); 
+}
+
+.resultado b {
+    font-weight: 700;
+    /* Acento para el texto destacado: Naranja Coral */
+    color: var(--p1-acento);
+}
+
+/* Estilo del icono/emoji de resultado */
+.result-icon {
+    font-size: 1.8rem; 
+    flex-shrink: 0;
+    line-height: 1; 
+    color: var(--p1-acento);
+    margin-right: 5px;
+}
+
+/* Estilos de encabezado */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px; 
+    /* Fondo del header: Naranja Coral */
+    background-color: var(--p1-header-bg); 
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--sombra-profunda);
+}
+
+header h1 {
+    font-size: 3rem;
+    /* Color del título: Blanco */
+    color: var(--p1-header-text); 
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+header p { 
+    /* Color del párrafo: Blanco */
+    color: var(--p1-header-text);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Estilos de error/alerta */
+.alerta-error {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #ffe5e5; /* Fondo rojo claro */
+    color: #cc0000; /* Texto rojo oscuro */
+    border: 1px solid #cc0000;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Estilos del Footer y Enlace de Volver (parte inferior) */
+footer {
+    margin-top: auto; /* Empuja el footer hacia abajo */
+    padding-top: 20px;
+    text-align: center;
+}
+
+.enlace-volver {
+    /* Estilos visuales (Color Naranja Coral) */
+    display: inline-block;
+    padding: 10px 20px; 
+    background-color: var(--p1-acento); /* Naranja Coral */
+    color: #FFFFFF; 
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem; 
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.enlace-volver:hover {
+    background-color: var(--p1-acento-hover); 
+    transform: translateY(-2px);
+}
+
+
+/* Media Query para móviles */
+@media (max-width: 600px) {
+    body { padding: 15px; }
+    header { margin-bottom: 30px; padding: 20px 10px; }
+    header h1 { font-size: 2.2rem; }
+    .contenedor-formulario { margin: 30px auto; padding: 30px; }
+    .boton-calcular { font-size: 1.1rem; }
+    .resultado { font-size: 1rem; padding: 15px; }
+    
+    .enlace-volver {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Problema 1: Suma de tres valores</h1>
+        <p>Ingresa tres números y calcula su suma total.</p>
+    </header>
+
+    <main style="flex-grow: 1;">
+        <div class="contenedor-formulario">
+            <!-- Formulario de entrada de datos --><div class="input-grupo">
+                <label for="numero1">Primer Número:</label>
+                <!-- Usamos type="number" para mejor experiencia en móvil, pero mantenemos compatibilidad con texto --><input type="number" id="numero1" placeholder="Ej: 10" value="0">
+            </div>
+            
+            <div class="input-grupo">
+                <label for="numero2">Segundo Número:</label>
+                <input type="number" id="numero2" placeholder="Ej: 5" value="0">
+            </div>
+            
+            <div class="input-grupo">
+                <label for="numero3">Tercer Número:</label>
+                <input type="number" id="numero3" placeholder="Ej: 25" value="0">
+            </div>
+            
+            <button class="boton-calcular" onclick="sumarValores()">Calcular Suma Total</button>
+            
+            <!-- Área para mostrar el resultado --><div class="resultado" id="resultado-suma">
+                El resultado de la suma aparecerá aquí.
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <!-- Enlace "Volver al inicio" movido al footer --><a href="index.html" class="enlace-volver">← Volver al inicio</a>
+    </footer>
+
+    <!-- Lógica JavaScript (Contenido de app.js) --><script>
+        /**
+         * Icono o emoji para el resultado final.
+         * Usamos el emoji de marca de verificación (✅) para indicar un cálculo exitoso.
+         */
+        const resultIcon = '✅'; 
+
+        /**
+         * Función principal para sumar los tres valores ingresados por el usuario.
+         * Esta función se ejecuta al hacer clic en el botón "Calcular Suma Total".
+         */
+        function sumarValores() {
+            // 1. Obtener los valores de los campos de entrada
+            const input1 = document.getElementById('numero1').value;
+            const input2 = document.getElementById('numero2').value;
+            const input3 = document.getElementById('numero3').value;
+
+            // 2. Convertir los valores a números (usando parseFloat para manejar decimales)
+            const num1 = parseFloat(input1);
+            const num2 = parseFloat(input2);
+            const num3 = parseFloat(input3);
+
+            const resultadoElemento = document.getElementById('resultado-suma');
+
+            // 3. Validación de entrada
+            if (isNaN(num1) || isNaN(num2) || isNaN(num3) || input1.trim() === '' || input2.trim() === '' || input3.trim() === '') {
+                resultadoElemento.innerHTML = `<div class="alerta-error">Por favor, ingresa tres valores numéricos válidos.</div>`;
+                return;
+            }
+
+            // 4. Realizar la suma
+            const sumaTotal = num1 + num2 + num3;
+
+            // 5. Formatear la suma para la salida (usando toLocaleString para formato de miles en español)
+            // Se utiliza maximumFractionDigits: 2 para no mostrar decimales si no son necesarios, 
+            // pero permitir dos decimales si la operación lo requiere (ej: 1.5 + 2.5 = 4).
+            const sumaDisplay = sumaTotal.toLocaleString('es-ES', { maximumFractionDigits: 2 });
+            const num1Display = num1.toLocaleString('es-ES', { maximumFractionDigits: 2 });
+            const num2Display = num2.toLocaleString('es-ES', { maximumFractionDigits: 2 });
+            const num3Display = num3.toLocaleString('es-ES', { maximumFractionDigits: 2 });
+
+            // 6. Mostrar el resultado, incluyendo el icono
+            const mensaje = `
+                <span class="result-icon">${resultIcon}</span>
+                <span>La suma total de ${num1Display}, ${num2Display} y ${num3Display} es: <b>${sumaDisplay}</b>.</span>
+            `;
+
+            resultadoElemento.innerHTML = mensaje;
+        }
+    </script>
+</body>
+</html>
